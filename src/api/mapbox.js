@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_KEY =
+const API_KEY =
   'pk.eyJ1Ijoicm9kbWMxIiwiYSI6ImNra25kNDExdjJvOGcyb243NWs4cjR5eWMifQ.HFkfk18kZnR6MLnu-2aoBg';
 const url = 'https://api.mapbox.com';
 
