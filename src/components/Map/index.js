@@ -7,7 +7,11 @@ import ReactMapGL, {
   ScaleControl
 } from 'react-map-gl';
 
-import { fetchLocationData, fetchDistanceMatrix } from '../../api/mapbox';
+import {
+  fetchLocationData,
+  fetchDistanceMatrix,
+  API_KEY
+} from '../../api/mapbox';
 import PinAddress from './Marker';
 
 const navStyle = {
@@ -73,7 +77,7 @@ export default function Map({ getMapDetails }) {
       <ReactMapGL
         onClick={onPinLocation}
         {...viewport}
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        mapboxApiAccessToken={API_KEY}
         onViewportChange={(nextViewport) => setViewport(nextViewport)}>
         <PinAddress
           selectedPlace={selectedPlace}

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_KEY = process.env.REACT_APP_MAPBOX_TOKEN;
+export const API_KEY = process.env.REACT_APP_MAPBOX_TOKEN;
 const url = 'https://api.mapbox.com';
 
 export const fetchLocationData = async (coordinates) => {
