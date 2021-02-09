@@ -12,7 +12,7 @@ const CartPage = ({ cartData, onChangeProduct }) => {
         <Container maxWidth="lg" style={{ marginTop: '1%' }}>
           <Typography
             variant="h6"
-            component="h"
+            component="p"
             style={{
               textAlign: 'center',
               color: '#3D3C3A',

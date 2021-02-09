@@ -17,7 +17,7 @@ const OrdeDetails = ({ estimatedDeliveryTime, cartData, pinnedLoc }) => {
 
   const renderCartItems = cartData.map((product) => {
     return (
-      <Typography gutterBottom variant="body2" component="p">
+      <Typography gutterBottom variant="body2" component="p" key={product.name}>
         {product.name} - x{product.quantity}{' '}
         <b>₱ {Number(product.price).toFixed(2)}</b>
       </Typography>

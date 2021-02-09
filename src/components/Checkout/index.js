@@ -27,7 +27,7 @@ const CheckoutPage = ({ cartData }) => {
   return (
     <div>
       <Grid container spacing={2} style={{ marginTop: '1%' }}>
-        <Grid item xs={12} md={8} lg={8} alignItems="center">
+        <Grid item xs={12} md={8} lg={8}>
           <Grid item xs={6} style={{ maxWidth: '300px', margin: '1%' }}>
             <Map getMapDetails={getMapDetails} />
           </Grid>

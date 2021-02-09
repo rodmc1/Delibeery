@@ -87,8 +87,12 @@ const CartItems = ({ cartData, onChangeProduct }) => {
     cartTotalPrice = cartTotalPrice + Number(product.price);
 
     return (
-      <Grid item xs={6} style={{ maxWidth: '300px', margin: '1%' }}>
-        <Card className={classes.root} key={product.id}>
+      <Grid
+        item
+        xs={6}
+        style={{ maxWidth: '300px', margin: '1%' }}
+        key={product.id}>
+        <Card className={classes.root}>
           <CardActionArea>
             <CardMedia
               className={classes.media}
@@ -108,7 +112,6 @@ const CartItems = ({ cartData, onChangeProduct }) => {
             style={{
               backgroundColor: 'lightgrey',
               display: 'flex',
-              alignItems: 'center',
               justifyContent: 'center',
               textAlign: 'center'
             }}>
@@ -151,7 +154,7 @@ const CartItems = ({ cartData, onChangeProduct }) => {
   ) : (
     <div>
       <Grid container spacing={2} style={{ marginTop: '1%' }}>
-        <Grid item xs={6} md={4} lg={4} alignItems="center">
+        <Grid item xs={6} md={4} lg={4}>
           {cartItemList}
         </Grid>
         <Grid item xs={6} md={2} lg={2}>
