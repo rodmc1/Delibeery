@@ -6,6 +6,7 @@ import ReactMapGL, {
   NavigationControl,
   ScaleControl
 } from 'react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { fetchLocationData, fetchDistanceMatrix } from '../../api/mapbox';
 import PinAddress from './Marker';

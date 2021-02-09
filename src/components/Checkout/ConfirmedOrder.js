@@ -16,10 +16,10 @@ const ConfirmedOrder = (props) => {
   }
 
   const renderedOrderDetails = orders.map((order) => {
-    console.log(order);
     const discountEl = !order.orderDetails.discount
       ? ''
       : `Discount: - ₱ ${order.orderDetails.discount.toFixed(2)}`;
+
     return (
       <div>
         <Typography gutterBottom variant="body3" component="p">
