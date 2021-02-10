@@ -21,7 +21,7 @@ const ConfirmedOrder = (props) => {
       : `Discount: - ₱ ${order.orderDetails.discount.toFixed(2)}`;
 
     return (
-      <div>
+      <div key={order.orderID}>
         <Typography gutterBottom variant="body3" component="p">
           Order ID: {order.orderId}
         </Typography>
@@ -59,7 +59,7 @@ const ConfirmedOrder = (props) => {
         <Typography
           gutterBottom
           variant="h6"
-          component="p"
+          component="h1"
           style={{ marginTop: '2%' }}>
           {renderedOrderDetails}
         </Typography>

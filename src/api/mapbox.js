@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_KEY =
+export const API_KEY =
   'pk.eyJ1Ijoicm9kbWMxIiwiYSI6ImNra25kNDExdjJvOGcyb243NWs4cjR5eWMifQ.HFkfk18kZnR6MLnu-2aoBg';
 const url = 'https://api.mapbox.com';
 
@@ -28,7 +28,7 @@ export const fetchDistanceMatrix = async (longitude, latitude) => {
       {
         params: {
           limit: 1,
-          access_token: process.env.REACT_APP_MAPBOX_TOKEN
+          access_token: API_KEY
         }
       }
     );

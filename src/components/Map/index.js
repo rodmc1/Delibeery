@@ -9,14 +9,16 @@ import ReactMapGL, {
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 
-import { fetchLocationData, fetchDistanceMatrix } from '../../api/mapbox';
+import {
+  fetchLocationData,
+  fetchDistanceMatrix,
+  API_KEY
+} from '../../api/mapbox';
 import PinAddress from './Marker';
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
-const API_KEY =
-  'pk.eyJ1Ijoicm9kbWMxIiwiYSI6ImNra25kNDExdjJvOGcyb243NWs4cjR5eWMifQ.HFkfk18kZnR6MLnu-2aoBg';
 const navStyle = {
   top: 72,
   left: 0,
