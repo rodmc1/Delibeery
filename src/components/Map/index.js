@@ -15,6 +15,7 @@ import {
   API_KEY
 } from '../../api/mapbox';
 import PinAddress from './Marker';
+
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
@@ -73,7 +74,11 @@ export default function Map({ getMapDetails }) {
     });
 
     fetchDistanceMatrix(pinned.long, pinned.lat).then((data) => {
-      setPinnedLocationName(data.features[0].text);
+      if (data.features[0].text) {
+        setPinnedLocationName(data.features[0].text);
+      } else {
+        setPinnedLocationName('Cannot read location, Try selecting again');
+      }
     });
   };
 

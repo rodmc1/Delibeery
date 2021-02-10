@@ -6,7 +6,12 @@ import { useHistory } from 'react-router-dom';
 import { addOrder, applyCoupon } from '../../api/jsonserver';
 import CouponInput from './Coupon';
 
-const OrdeDetails = ({ estimatedDeliveryTime, cartData, pinnedLoc }) => {
+const OrdeDetails = ({
+  estimatedDeliveryTime,
+  cartData,
+  pinnedLoc,
+  handleOrder
+}) => {
   const history = useHistory();
   const [couponDiscount, setDiscount] = useState(0);
   const disableButton = !pinnedLoc ? true : false;
@@ -44,20 +49,26 @@ const OrdeDetails = ({ estimatedDeliveryTime, cartData, pinnedLoc }) => {
     }
 
     const orderData = {
-      orderId: Date.now(),
+      id: Date.now(),
       address: pinnedLoc,
       deliveryTime: estimatedDeliveryTime,
-      status: 'Delivered',
+      status: 'Preparing order',
       date: moment().format('DD-MMM-YYYY h:mm:ss a'),
+      discount: couponDiscount,
+      totalPrice: subtotal + deliveryFee - couponDiscount,
       orderDetails: {
-        orders: cartData,
-        discount: couponDiscount,
-        totalPrice: subtotal + deliveryFee - couponDiscount
+        orders: cartData
       }
     };
 
     const response = await addOrder(orderData);
-    history.push({ pathname: '/checkout/confirmed', response, couponDiscount });
+    history.push({
+      pathname: `/track-order/${orderData.id}`,
+      response,
+      couponDiscount
+    });
+
+    handleOrder(orderData.id);
   };
 
   return (

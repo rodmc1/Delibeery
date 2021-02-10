@@ -6,7 +6,7 @@ import ConfirmedOrder from './ConfirmedOrder';
 import { Route } from 'react-router-dom';
 import CouponInput from './Coupon';
 
-const CheckoutPage = ({ cartData }) => {
+const CheckoutPage = ({ cartData, handleOrder }) => {
   const [restaurantCoords, setRestaurantCoords] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState([]);
   const [estimatedDeliveryTime, setEstimatedDeliveryTime] = useState([]);
@@ -39,13 +39,10 @@ const CheckoutPage = ({ cartData }) => {
             estimatedDeliveryTime={estimatedDeliveryTime}
             cartData={cartData}
             pinnedLoc={pinnedLoc}
+            handleOrder={handleOrder}
           />
         </Grid>
       </Grid>
-
-      <Route path="/checkout/confirmed" exact>
-        <ConfirmedOrder cartData={cartData} />
-      </Route>
     </div>
   );
 };
