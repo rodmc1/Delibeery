@@ -7,11 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { Link } from 'react-router-dom';
+import logo from '../../imgs/delibeery.png';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
-    marginBottom: '5%'
+    marginBottom: 50
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     display: 'none',
     [theme.breakpoints.up('sm')]: {
-      display: 'block'
+      display: 'inline'
     }
   },
   sectionDesktop: {
@@ -38,8 +39,19 @@ const Appbar = ({ cartItemCount }) => {
       <AppBar position="fixed" color="primary">
         <Toolbar>
           <Link to="/" style={{ color: 'inherit', textDecoration: 'inherit' }}>
-            <Typography className={classes.title} variant="h6" noWrap>
-              Delibeery
+            <Typography className={classes.title} variant="h4" noWrap>
+              <img
+                style={{
+                  width: 37,
+                  height: 35,
+                  borderRadius: 10,
+                  marginRight: 5
+                }}
+                src={logo}
+              />
+              <span style={{ verticalAlign: 'center', float: 'right' }}>
+                Delibeery
+              </span>
             </Typography>
           </Link>
           <div className={classes.grow} />

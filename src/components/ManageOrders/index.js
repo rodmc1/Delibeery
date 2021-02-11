@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -24,18 +22,20 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { Link } from 'react-router-dom';
+import EnhancedTableHead from './EnhancedTableHead';
 
 import {
   fetchOrders,
   deleteOrderById,
   updateOrderStatus
 } from '../../api/jsonserver';
+import useToolbarStyles from './UseToolbarStyles';
 
-function createData(id, price, date, adress, status) {
+const createData = (id, price, date, adress, status) => {
   return { id, price, date, adress, status };
-}
+};
 
-function descendingComparator(a, b, orderBy) {
+const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }
@@ -43,7 +43,7 @@ function descendingComparator(a, b, orderBy) {
     return 1;
   }
   return 0;
-}
+};
 
 function getComparator(order, orderBy) {
   return order === 'desc'
@@ -60,112 +60,6 @@ function stableSort(array, comparator) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
-
-const headCells = [
-  {
-    id: 'id',
-    numeric: false,
-    disablePadding: true,
-    label: 'Order ID'
-  },
-  { id: 'price', numeric: false, disablePadding: false, label: 'Price' },
-  { id: 'date', numeric: true, disablePadding: false, label: 'Date Ordered' },
-  { id: 'link', numeric: true, disablePadding: false, label: 'Track Order' },
-  { id: 'adress', numeric: false, disablePadding: false, label: 'Address' },
-  { id: 'status', numeric: false, disablePadding: false, label: 'Status' }
-];
-
-function EnhancedTableHead(props) {
-  const {
-    classes,
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort
-  } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'center' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === headCell.id ? order : false}>
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}>
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired
-};
-
-const useToolbarStyles = makeStyles((theme) => ({
-  root: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1)
-  },
-  highlight:
-    theme.palette.type === 'light'
-      ? {
-          color: theme.palette.text.primary,
-          backgroundColor: lighten(theme.palette.primary.main, 0.5)
-        }
-      : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.info.light
-        },
-  title: {
-    flex: '1 1 100%'
-  },
-  delivered: {
-    backgroundColor: '#69f0ae',
-    color: '#1a237e',
-    width: 175,
-    marginRight: 10
-  },
-  ontheway: {
-    width: 200,
-    marginRight: 10
-  },
-  delete: {
-    width: 150
-  }
-}));
 
 const EnhancedTableToolbar = ({
   numSelected,
@@ -434,7 +328,7 @@ const ManageOrders = ({ handleOrder }) => {
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={7} />
                 </TableRow>
               )}
             </TableBody>

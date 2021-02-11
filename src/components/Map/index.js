@@ -21,7 +21,7 @@ import PinAddress from './Marker';
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 const navStyle = {
-  top: 72,
+  top: 0,
   left: 0,
   padding: '10px'
 };
