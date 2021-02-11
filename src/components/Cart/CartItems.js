@@ -69,11 +69,9 @@ const CartItems = ({ cartData, onChangeProduct }) => {
       updateCart(item, getItemIndex, type);
       getCartTotalCount(cartTotalCount - 1);
     }
-    if (type === 'ADD') {
+    if (type === 'ADD' && getItemIndex !== -1) {
       getCartTotalCount(cartTotalCount + 1);
-      getItemIndex !== -1
-        ? updateCart(item, getItemIndex, type)
-        : setCartItems([...cartItems, item]);
+      updateCart(item, getItemIndex, type);
     }
   };
 

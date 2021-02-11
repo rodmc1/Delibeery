@@ -6,7 +6,7 @@ import Container from '@material-ui/core/Container';
 
 const Cards = ({ menu, onChangeProduct }) => {
   const [cartItems, setCartItems] = useState([]);
-  const [cartTotalCount, getCartTotalCount] = useState(0);
+  const [cartTotalCount, setCartTotalCount] = useState(0);
 
   useEffect(() => {
     onChangeProduct(cartItems, cartTotalCount);
@@ -38,10 +38,10 @@ const Cards = ({ menu, onChangeProduct }) => {
     const getItemIndex = cartItems.findIndex((i) => i.id === item.id);
     if (type === 'REDUCE' && getItemIndex !== -1) {
       updateCart(item, getItemIndex, type);
-      getCartTotalCount(cartTotalCount - 1);
+      setCartTotalCount(cartTotalCount - 1);
     }
     if (type === 'ADD') {
-      getCartTotalCount(cartTotalCount + 1);
+      setCartTotalCount(cartTotalCount + 1);
       getItemIndex !== -1
         ? updateCart(item, getItemIndex, type)
         : setCartItems([...cartItems, item]);

@@ -27,7 +27,6 @@ const App = () => {
     fetchOrders().then((data) => setOrderData(data));
   }, [orderUpdate]);
 
-  // console.log(orderData);
   return (
     <Router>
       <Switch>
