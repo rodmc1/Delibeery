@@ -4,9 +4,9 @@ import CardDetails from './CardDetails';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 
-const Cards = ({ menu, onChangeProduct }) => {
-  const [cartItems, setCartItems] = useState([]);
-  const [cartTotalCount, setCartTotalCount] = useState(0);
+const Cards = ({ menu, onChangeProduct, cartData, cartItemCount }) => {
+  const [cartItems, setCartItems] = useState(cartData);
+  const [cartTotalCount, setCartTotalCount] = useState(cartItemCount);
 
   useEffect(() => {
     onChangeProduct(cartItems, cartTotalCount);
@@ -48,7 +48,10 @@ const Cards = ({ menu, onChangeProduct }) => {
     }
   };
 
+  let itemCount = 0;
   const productList = menu.map((product) => {
+    itemCount = cartData.find((item) => item.id === product.id);
+
     return (
       <div key={product.id}>
         <Grid item xs={4} style={{ maxWidth: '300px', margin: '5%' }}>
@@ -56,6 +59,9 @@ const Cards = ({ menu, onChangeProduct }) => {
             <CardDetails
               product={product}
               getTotalCartItems={getTotalCartItems}
+              cartItems={cartItems}
+              cartTotalCount={cartTotalCount}
+              itemCount={itemCount}
             />
           </Card>
         </Grid>

@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { fetchMenu } from '../../api/jsonserver';
+import React from 'react';
 import Cards from './Cards';
 
-const Menu = ({ onChangeProduct }) => {
-  const [menu, setMenu] = useState([]);
-
-  useEffect(() => {
-    fetchMenu().then((data) => {
-      setMenu(data);
-    });
-  }, []);
-
+const Menu = ({ onChangeProduct, cartData, cartItemCount, menu }) => {
   return (
     <div className="container">
-      <Cards menu={menu} onChangeProduct={onChangeProduct} />
+      <Cards
+        menu={menu}
+        onChangeProduct={onChangeProduct}
+        cartData={cartData}
+        cartItemCount={cartItemCount}
+      />
     </div>
   );
 };

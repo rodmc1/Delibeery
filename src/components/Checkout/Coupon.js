@@ -18,12 +18,17 @@ const CouponInput = ({ handleCoupon }) => {
   let disable = couponText.length > 0 ? false : true;
 
   const onCouponSubmit = (e) => {
-    e.preventDefault();
     handleCoupon(couponText);
   };
 
   return (
-    <form className={classes.root} noValidate autoComplete="off">
+    <form
+      className={classes.root}
+      noValidate
+      autoComplete="off"
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}>
       <TextField
         id="standard-basic"
         label="Have a coupon code?"
@@ -35,6 +40,9 @@ const CouponInput = ({ handleCoupon }) => {
         color="primary"
         size="small"
         disabled={disable}
+        onKeyPress={(e) => {
+          e.key === 'Enter' && e.preventDefault();
+        }}
         onClick={(e) => onCouponSubmit(e)}>
         Submit Coupon
       </Button>

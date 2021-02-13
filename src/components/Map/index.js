@@ -15,6 +15,7 @@ import {
   API_KEY
 } from '../../api/mapbox';
 import PinAddress from './Marker';
+import RestaurantPin from './RestaurantPin';
 
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -38,6 +39,7 @@ export default function Map({ getMapDetails }) {
   const [pinnedLocationName, setPinnedLocationName] = useState(null);
   const [close, setClose] = useState(false);
   const [deliveryTime, setDeliveryTime] = useState('');
+  const [loading, setLoading] = useState(true);
   const [viewport, setViewport] = useState({
     width: '62vw',
     height: '80vh',
@@ -56,6 +58,7 @@ export default function Map({ getMapDetails }) {
   }, [deliveryTime]);
 
   const onPinLocation = (event) => {
+    setLoading(true);
     setSelectedPlace(event.lngLat);
     const pinned = {
       lat: event.lngLat[1],
@@ -63,23 +66,27 @@ export default function Map({ getMapDetails }) {
     };
 
     const coordinates = `${restaurantCoords[0]},${restaurantCoords[1]};${pinned.long},${pinned.lat}`;
-    fetchLocationData(coordinates).then((data) => {
-      const hour = data.durations[0][1] < 3600 ? '' : 'H [hours,]';
-      const prepareOrderTime = 600;
-      const EstimatedDeliveryTime = moment
-        .unix(data.durations[0][1] + prepareOrderTime)
-        .utc()
-        .format(`${hour} m [minutes]`);
-      setDeliveryTime(EstimatedDeliveryTime);
-    });
 
-    fetchDistanceMatrix(pinned.long, pinned.lat).then((data) => {
-      if (data.features[0].text) {
-        setPinnedLocationName(data.features[0].text);
-      } else {
-        setPinnedLocationName('Cannot read location, Try selecting again');
-      }
-    });
+    fetchLocationData(pinned.long, pinned.lat)
+      .then((data) => {
+        if (data.features[0].text) {
+          setPinnedLocationName(data.features[0].text);
+        } else {
+          setPinnedLocationName('Cannot read location, Try selecting again');
+        }
+      })
+      .then(() => {
+        fetchDistanceMatrix(coordinates).then((data) => {
+          const hour = data.durations[0][1] < 3600 ? '' : 'H [hours,]';
+          const prepareOrderTime = 600;
+          const EstimatedDeliveryTime = moment
+            .unix(data.durations[0][1] + prepareOrderTime)
+            .utc()
+            .format(`${hour} m [minutes]`);
+          setDeliveryTime(EstimatedDeliveryTime);
+          setLoading(false);
+        });
+      });
   };
 
   return (
@@ -93,6 +100,7 @@ export default function Map({ getMapDetails }) {
           selectedPlace={selectedPlace}
           deliveryTime={deliveryTime}
           pinnedLocationName={pinnedLocationName}
+          loading={loading}
         />
 
         {close === false ? (
@@ -107,18 +115,7 @@ export default function Map({ getMapDetails }) {
           ''
         )}
 
-        <Marker
-          key={`1`}
-          latitude={14.637202}
-          longitude={121.0415983}
-          onClick={() => setClose(false)}>
-          <img
-            src="https://cdn4.iconfinder.com/data/icons/map-pins-2/256/21-512.png"
-            width="50px"
-            height="50px"
-            style={{ position: 'absolute', top: '-50px', left: '-30px' }}
-          />
-        </Marker>
+        <RestaurantPin />
         <NavigationControl style={navStyle} />
         <ScaleControl style={scaleControlStyle} />
       </ReactMapGL>

@@ -10,7 +10,8 @@ const OrdeDetails = ({
   estimatedDeliveryTime,
   cartData,
   pinnedLoc,
-  handleOrder
+  handleOrder,
+  onChangeProduct
 }) => {
   const history = useHistory();
   const [couponDiscount, setDiscount] = useState(0);
@@ -69,6 +70,7 @@ const OrdeDetails = ({
     });
 
     handleOrder(orderData.id);
+    onChangeProduct([], 0);
   };
 
   return (

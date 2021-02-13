@@ -13,13 +13,18 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Home = ({ onChangeProduct }) => {
+const Home = ({ onChangeProduct, cartData, cartItemCount, menu }) => {
   const classes = useStyles();
 
   return (
     <div>
       <Paper elevation={1} className={classes.paperContainer} />
-      <Menu onChangeProduct={onChangeProduct} />
+      <Menu
+        onChangeProduct={onChangeProduct}
+        cartData={cartData}
+        cartItemCount={cartItemCount}
+        menu={menu}
+      />
     </div>
   );
 };

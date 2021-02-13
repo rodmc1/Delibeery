@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Home from './Home';
 import Cart from './Cart';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Appbar from './Appbar';
 import Checkout from './Checkout';
 import ConfirmedOrder from './Checkout/ConfirmedOrder';
 import ManageOrders from './ManageOrders';
-import { fetchOrders } from '../api/jsonserver';
+import ManageProducts from './ManageProducts';
+import { fetchOrders, fetchMenu } from '../api/jsonserver';
 
 const App = () => {
   const [cartItemCount, setCartItemCount] = useState(0);
   const [cartData, setCartData] = useState([]);
   const [orderUpdate, setOrderUpdate] = useState(null);
   const [orderData, setOrderData] = useState([]);
+  const [menu, setMenu] = useState([]);
 
   const onChangeProduct = (cartSelectedItems, cartTotalCount) => {
     setCartItemCount(cartTotalCount);
@@ -24,6 +26,12 @@ const App = () => {
   };
 
   useEffect(() => {
+    fetchMenu().then((data) => {
+      setMenu(data);
+    });
+  }, []);
+
+  useEffect(() => {
     fetchOrders().then((data) => setOrderData(data));
   }, [orderUpdate]);
 
@@ -32,7 +40,12 @@ const App = () => {
       <Switch>
         <Route path="/" exact>
           <Appbar cartItemCount={cartItemCount} />
-          <Home onChangeProduct={onChangeProduct} />
+          <Home
+            onChangeProduct={onChangeProduct}
+            cartData={cartData}
+            cartItemCount={cartItemCount}
+            menu={menu}
+          />
         </Route>
         <Route path="/cart" exact>
           <Appbar cartItemCount={cartItemCount} />
@@ -40,10 +53,17 @@ const App = () => {
         </Route>
         <Route path="/checkout" exact>
           <Appbar cartItemCount={cartItemCount} />
-          <Checkout cartData={cartData} handleOrder={handleOrder} />
+          <Checkout
+            cartData={cartData}
+            handleOrder={handleOrder}
+            onChangeProduct={onChangeProduct}
+          />
         </Route>
         <Route path="/manage/orders" exact>
           <ManageOrders handleOrder={handleOrder} />
+        </Route>
+        <Route path="/manage/products" exact>
+          <ManageProducts orderData={orderData} menu={menu} />
         </Route>
         {orderData.map((order) => {
           return (

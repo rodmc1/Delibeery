@@ -1,5 +1,8 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import LocalBarIcon from '@material-ui/icons/LocalBar';
+import { Link } from 'react-router-dom';
 
 const ConfirmedOrder = ({ order }) => {
   if (!order) {
@@ -37,8 +40,17 @@ const ConfirmedOrder = ({ order }) => {
   );
 
   return (
-    <div style={{ margin: '10%' }}>
-      <div>
+    <div>
+      <Link to="/" variant="body2" style={{ textDecoration: 'none' }}>
+        <Button
+          variant="contained"
+          color="default"
+          size="small"
+          startIcon={<LocalBarIcon />}>
+          Back to menu
+        </Button>
+      </Link>
+      <div style={{ margin: '10%' }}>
         <Typography gutterBottom variant="h3" component="p">
           ORDER CONFIRMED! Cheers!
         </Typography>
