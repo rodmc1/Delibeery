@@ -39,7 +39,6 @@ const App = () => {
     <Router>
       <Switch>
         <Route path="/" exact>
-          <Appbar cartItemCount={cartItemCount} />
           <Home
             onChangeProduct={onChangeProduct}
             cartData={cartData}
@@ -48,14 +47,17 @@ const App = () => {
           />
         </Route>
         <Route path="/cart" exact>
-          <Appbar cartItemCount={cartItemCount} />
-          <Cart cartData={cartData} onChangeProduct={onChangeProduct} />
+          <Cart
+            cartData={cartData}
+            cartItemCount={cartItemCount}
+            onChangeProduct={onChangeProduct}
+          />
         </Route>
         <Route path="/checkout" exact>
-          <Appbar cartItemCount={cartItemCount} />
           <Checkout
             cartData={cartData}
             handleOrder={handleOrder}
+            cartItemCount={cartItemCount}
             onChangeProduct={onChangeProduct}
           />
         </Route>

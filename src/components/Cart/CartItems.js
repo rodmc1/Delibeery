@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import AddRoundedIcon from '@material-ui/icons/AddRounded';
-import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 import { Link } from 'react-router-dom';
+import CartActions from './CartActions';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -30,6 +25,7 @@ const CartItems = ({ cartData, onChangeProduct }) => {
 
   const [cartTotalCount, getCartTotalCount] = useState(newCartCount);
   const classes = useStyles();
+
   const updateCart = (item, index, type) => {
     const newArray = [...cartItems];
 
@@ -91,57 +87,10 @@ const CartItems = ({ cartData, onChangeProduct }) => {
         style={{ maxWidth: '300px', margin: '1%' }}
         key={product.id}>
         <Card className={classes.root}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image={product.img}
-              title={product.name}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h6" component="h6">
-                {product.name}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Total ₱ {product.price}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions
-            style={{
-              backgroundColor: 'lightgrey',
-              display: 'flex',
-              justifyContent: 'center',
-              textAlign: 'center'
-            }}>
-            <Button
-              size="small"
-              color="default"
-              variant="contained"
-              onClick={() => getTotalCartItems(product, 'REDUCE')}
-              style={{ backgroundColor: 'white', height: '20px' }}>
-              <RemoveRoundedIcon />
-            </Button>
-            <Typography
-              variant="body2"
-              component="p"
-              style={{
-                backgroundColor: '#E5E4E2',
-                borderRadius: 5,
-                width: '10%',
-                textAlign: 'center',
-                color: '#3D3C3A'
-              }}>
-              {product.quantity}
-            </Typography>
-            <Button
-              size="small"
-              color="default"
-              variant="contained"
-              onClick={() => getTotalCartItems(product, 'ADD')}
-              style={{ backgroundColor: 'white', height: '20px' }}>
-              <AddRoundedIcon />
-            </Button>
-          </CardActions>
+          <CartActions
+            product={product}
+            getTotalCartItems={getTotalCartItems}
+          />
         </Card>
       </Grid>
     );

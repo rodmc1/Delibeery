@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Hero from '../../imgs/main.jpg';
 import Menu from './Menu';
 import MenuLoader from './MenuLoader';
+import Appbar from '../Appbar';
 
 const useStyles = makeStyles(() => ({
   paperContainer: {
@@ -20,6 +21,7 @@ const Home = ({ onChangeProduct, cartData, cartItemCount, menu }) => {
   return (
     <div>
       <MenuLoader menu={menu} />
+      <Appbar cartItemCount={cartItemCount} />
       <Paper elevation={1} className={classes.paperContainer} />
       <Menu
         onChangeProduct={onChangeProduct}

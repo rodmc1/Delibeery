@@ -1,38 +1,20 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { Link, useLocation } from 'react-router-dom';
+import logo from '../../imgs/delibeery.png';
+import useStyles from './UseStyles';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import { Link } from 'react-router-dom';
-import logo from '../../imgs/delibeery.png';
-
-const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1,
-    marginBottom: 50
-  },
-  menuButton: {
-    marginRight: theme.spacing(2)
-  },
-  title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'inline'
-    }
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex'
-    }
-  }
-}));
+import SettingsIcon from '@material-ui/icons/Settings';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const Appbar = ({ cartItemCount }) => {
   const classes = useStyles();
+  let location = useLocation();
 
   return (
     <div className={classes.grow}>
@@ -56,15 +38,27 @@ const Appbar = ({ cartItemCount }) => {
           </Link>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link
-              to="/cart"
-              style={{ color: 'inherit', textDecoration: 'inherit' }}>
-              <IconButton aria-label="show 4 product" color="inherit">
-                <Badge badgeContent={cartItemCount} color="secondary">
-                  <ShoppingCartOutlinedIcon fontSize="large" />
-                </Badge>
-              </IconButton>
-            </Link>
+            {location.pathname === '/manage/orders' ? (
+              <Link
+                to="/manage/products"
+                style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                <Tooltip title="Manage Products" aria-label="Manage Products">
+                  <IconButton aria-label="Manage Products" color="inherit">
+                    <SettingsIcon fontSize="large" />
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            ) : (
+              <Link
+                to="/cart"
+                style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                <IconButton aria-label="show product count" color="inherit">
+                  <Badge badgeContent={cartItemCount} color="secondary">
+                    <ShoppingCartOutlinedIcon fontSize="large" />
+                  </Badge>
+                </IconButton>
+              </Link>
+            )}
           </div>
         </Toolbar>
       </AppBar>

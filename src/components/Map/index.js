@@ -72,7 +72,7 @@ export default function Map({ getMapDetails }) {
         if (data.features[0].text) {
           setPinnedLocationName(data.features[0].text);
         } else {
-          setPinnedLocationName('Cannot read location, Try selecting again');
+          setPinnedLocationName('Cannot read location, try selecting again');
         }
       })
       .then(() => {

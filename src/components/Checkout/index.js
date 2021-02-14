@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Map from '../Map';
 import OrderDetails from './OrderDetails';
+import Appbar from '../Appbar';
 
-const CheckoutPage = ({ cartData, handleOrder, onChangeProduct }) => {
+const CheckoutPage = ({
+  cartData,
+  handleOrder,
+  onChangeProduct,
+  cartItemCount
+}) => {
   const [restaurantCoords, setRestaurantCoords] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState([]);
   const [estimatedDeliveryTime, setEstimatedDeliveryTime] = useState([]);
@@ -23,6 +29,7 @@ const CheckoutPage = ({ cartData, handleOrder, onChangeProduct }) => {
 
   return (
     <div>
+      <Appbar cartItemCount={cartItemCount} />
       <Grid container spacing={2} style={{ marginTop: '5%' }}>
         {!cartData.length ? (
           <div>

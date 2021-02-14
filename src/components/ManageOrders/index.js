@@ -29,6 +29,7 @@ import {
   deleteOrderById,
   updateOrderStatus
 } from '../../api/jsonserver';
+import Appbar from '../Appbar';
 import useToolbarStyles from './UseToolbarStyles';
 
 const createData = (id, price, date, adress, status) => {
@@ -45,13 +46,13 @@ const descendingComparator = (a, b, orderBy) => {
   return 0;
 };
 
-function getComparator(order, orderBy) {
+const getComparator = (order, orderBy) => {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
-}
+};
 
-function stableSort(array, comparator) {
+const stableSort = (array, comparator) => {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -59,7 +60,7 @@ function stableSort(array, comparator) {
     return a[1] - b[1];
   });
   return stabilizedThis.map((el) => el[0]);
-}
+};
 
 const EnhancedTableToolbar = ({
   numSelected,
@@ -147,7 +148,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: '100%',
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(5),
+    marginTop: '5%'
   },
   table: {
     minWidth: 750
@@ -264,6 +266,7 @@ const ManageOrders = ({ handleOrder }) => {
 
   return (
     <div className={classes.root}>
+      <Appbar />
       <Paper className={classes.paper}>
         <EnhancedTableToolbar
           numSelected={selected.length}
