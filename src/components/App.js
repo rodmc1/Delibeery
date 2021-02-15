@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Home from './Home';
 import Cart from './Cart';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Appbar from './Appbar';
 import Checkout from './Checkout';
 import ConfirmedOrder from './Checkout/ConfirmedOrder';
 import ManageOrders from './ManageOrders';
@@ -62,7 +61,7 @@ const App = () => {
           />
         </Route>
         <Route path="/manage/orders" exact>
-          <ManageOrders handleOrder={handleOrder} />
+          <ManageOrders handleOrder={handleOrder} orderData={orderData} />
         </Route>
         <Route path="/manage/products" exact>
           <ManageProducts orderData={orderData} menu={menu} />

@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Hero from '../../imgs/main.jpg';
 import Menu from './Menu';
-import MenuLoader from './MenuLoader';
+import Loader from '../Loader';
 import Appbar from '../Appbar';
 
 const useStyles = makeStyles(() => ({
@@ -20,7 +20,7 @@ const Home = ({ onChangeProduct, cartData, cartItemCount, menu }) => {
 
   return (
     <div>
-      <MenuLoader menu={menu} />
+      <Loader menu={menu} message="Loading Menu" />
       <Appbar cartItemCount={cartItemCount} />
       <Paper elevation={1} className={classes.paperContainer} />
       <Menu

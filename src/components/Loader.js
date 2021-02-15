@@ -2,6 +2,7 @@ import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
   loader: {
@@ -29,15 +30,24 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const MenuLoader = ({ menu }) => {
+const Loader = (props) => {
   const classes = useStyles();
+  let location = useLocation();
+  let isLoading = true;
 
-  return !menu.length ? (
+  if (location.pathname === '/manage/orders') {
+    isLoading = !props.orderData.length;
+  }
+  if (location.pathname === '/') {
+    isLoading = !props.menu.length;
+  }
+
+  return isLoading ? (
     <div>
       <div className={classes.loaderBackground}></div>
       <div className={classes.loader}>
         <CircularProgress size={50} />
-        <Typography variant="body2">Loading Menu</Typography>
+        <Typography variant="body2">{props.message}</Typography>
       </div>
     </div>
   ) : (
@@ -45,4 +55,4 @@ const MenuLoader = ({ menu }) => {
   );
 };
 
-export default MenuLoader;
+export default Loader;

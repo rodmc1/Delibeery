@@ -68,7 +68,7 @@ export const updateOrderStatus = async (id, status) => {
       status: status
     });
 
-    console.log(response);
+    return response;
   } catch (err) {
     console.log(err);
   }
@@ -80,7 +80,7 @@ export const updateProductStatusById = async (id, status) => {
       status: status
     });
 
-    console.log(response);
+    return response;
   } catch (err) {
     console.log(err);
   }

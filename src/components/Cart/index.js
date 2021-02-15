@@ -1,9 +1,10 @@
 import React from 'react';
+import CartItems from './CartItems';
+import Appbar from '../Appbar';
+
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import CartItems from './CartItems';
-import Appbar from '../Appbar';
 
 const CartPage = ({ cartData, onChangeProduct, cartItemCount }) => {
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,13 +24,10 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import { Link } from 'react-router-dom';
 import EnhancedTableHead from './EnhancedTableHead';
 
-import {
-  fetchOrders,
-  deleteOrderById,
-  updateOrderStatus
-} from '../../api/jsonserver';
+import { deleteOrderById, updateOrderStatus } from '../../api/jsonserver';
 import Appbar from '../Appbar';
 import useToolbarStyles from './UseToolbarStyles';
+import Loader from '../Loader';
 
 const createData = (id, price, date, adress, status) => {
   return { id, price, date, adress, status };
@@ -152,7 +149,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '5%'
   },
   table: {
-    minWidth: 750
+    minWidth: 'auto'
   },
   visuallyHidden: {
     border: 0,
@@ -167,7 +164,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ManageOrders = ({ handleOrder }) => {
+const ManageOrders = ({ handleOrder, orderData }) => {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('date');
@@ -175,16 +172,10 @@ const ManageOrders = ({ handleOrder }) => {
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [ordersList, setOrdersList] = useState([]);
   const [pageUpdate, setPageUpdate] = useState([]);
+  const ordersList = orderData;
+
   let rows = [];
-
-  useEffect(() => {
-    fetchOrders().then((response) => {
-      setOrdersList(response);
-    });
-  }, [pageUpdate]);
-
   ordersList.map((ordersList) =>
     rows.push(
       createData(
@@ -268,6 +259,7 @@ const ManageOrders = ({ handleOrder }) => {
     <div className={classes.root}>
       <Appbar />
       <Paper className={classes.paper}>
+        <Loader orderData={orderData} message="Loading Orders" />
         <EnhancedTableToolbar
           numSelected={selected.length}
           onDeleteOrder={onDeleteOrder}
